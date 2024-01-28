@@ -1,0 +1,33 @@
+first: 0
+# nested keys also preserve order
+second:
+    third: 1
+    fourth: 2
+fifth: 3
+# arrays don't preserve order
+sixth:
+    - "a"
+    - "b"
+    - "c"
+seventh: 4
+---
+{
+    "seventh": 0,
+    "sixth": ["c", "b", "a"],
+    "fifth": 1,
+    "second": { "fourth": 2, "third": 3 },
+    "first": 4,
+}
+---
+first: 4
+# nested keys also preserve order
+second:
+    third: 3
+    fourth: 2
+fifth: 1
+# arrays don't preserve order
+sixth:
+    - "c"
+    - "b"
+    - "a"
+seventh: 0

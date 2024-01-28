@@ -1,0 +1,12 @@
+foo: true # line comment
+# field comment
+bar:
+    baz: "string" # nested comment
+    removed: 0 # will be removed
+---
+{ "foo": false, "bar": { "baz": "number" } }
+---
+foo: false # line comment
+# field comment
+bar:
+    baz: "number" # nested comment

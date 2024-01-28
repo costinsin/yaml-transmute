@@ -160,6 +160,8 @@ export type YAMLContext = {
  *
  * @param yamlContent The YAML content to parse.
  * @returns A tuple containing the parsed YAML object and the YAML context.
+ *
+ * @throws {Error} If the YAML content contains syntax errors.
  */
 export function parse(yamlContent: string): [object, YAMLContext] {
     // Check for syntax errors
@@ -187,11 +189,15 @@ export function parse(yamlContent: string): [object, YAMLContext] {
  * @param context - The YAML context.
  * @returns The string representation of the updated YAML.
  */
-export function stringify(updatedYaml: object, context: YAMLContext): string {
+export function stringify(
+    updatedYaml: object,
+    context: YAMLContext,
+    options?: yaml.ToStringOptions
+): string {
     const document = context.document;
 
     shapeshiftDocument(document.toJSON(), updatedYaml, document);
     objectToPaths(updatedYaml).forEach(([path, value]) => document.setIn(path, value));
 
-    return document.toString();
+    return document.toString(options);
 }
