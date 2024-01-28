@@ -18,5 +18,14 @@
     },
     "devDependencies": {
         "typescript": "^5.3.3"
-    }
+    },
+    "repository": "costinsin/yaml-transmute",
+    "keywords": [
+        "yaml",
+        "comment",
+        "key",
+        "order",
+        "preserve",
+        "transmute"
+    ]
 }
