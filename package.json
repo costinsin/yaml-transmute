@@ -1,8 +1,8 @@
 {
     "name": "yaml-transmute",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "YAML parser that lets you write back the YAML file later without loosing the file structure (comments, field order, etc..)",
-    "main": "dist/indes.js",
+    "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
         "/dist"
