@@ -125,7 +125,7 @@ function shapeshiftDocument(document: unknown, newModel: unknown, doc: yaml.Docu
             return;
         }
 
-        const documentKeys = Object.keys(document);
+        const documentKeys = Object.keys(document).reverse();
         for (const key of documentKeys) {
             if (newModel[key] === undefined) {
                 doc.deleteIn([...currentPath, key]);
