@@ -191,9 +191,13 @@ export function parse(yamlContent: string): [object, YAMLContext] {
  */
 export function stringify(
     updatedYaml: object,
-    context: YAMLContext,
+    context: YAMLContext | undefined,
     options?: yaml.ToStringOptions
 ): string {
+    if (!context) {
+        return yaml.stringify(updatedYaml, options);
+    }
+
     const document = context.document;
 
     shapeshiftDocument(document.toJSON(), updatedYaml, document);
