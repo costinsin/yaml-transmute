@@ -28,5 +28,9 @@
         "order",
         "preserve",
         "transmute"
-    ]
+    ],
+    "prettier": {
+        "tabWidth": 4,
+        "printWidth": 100
+    }
 }
