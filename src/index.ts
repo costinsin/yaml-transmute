@@ -163,7 +163,7 @@ export type YAMLContext = {
  *
  * @throws {Error} If the YAML content contains syntax errors.
  */
-export function parse(yamlContent: string): [object, YAMLContext] {
+export function parse(yamlContent: string): [unknown, YAMLContext] {
     // Check for syntax errors
     const yamlObject = yaml.parse(yamlContent);
 
@@ -190,7 +190,7 @@ export function parse(yamlContent: string): [object, YAMLContext] {
  * @returns The string representation of the updated YAML.
  */
 export function stringify(
-    updatedYaml: object,
+    updatedYaml: unknown,
     context: YAMLContext | undefined,
     options?: yaml.ToStringOptions
 ): string {
