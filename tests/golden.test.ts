@@ -18,9 +18,7 @@ describe("yaml-transmute", () => {
             const [, context] = parse(originalYaml);
             expect
                 .soft(
-                    stringify(JSON.parse(fixFormattedJson(modifiedObj)), context, {
-                        indent: 4,
-                    }).trim(),
+                    stringify(JSON.parse(fixFormattedJson(modifiedObj)), context).trim(),
                     `Golden test \x1b[32m${file}\x1b[31m failed`
                 )
                 .toBe(expectedYaml);
