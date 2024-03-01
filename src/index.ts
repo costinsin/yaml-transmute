@@ -1,4 +1,5 @@
 import yaml, { Parser, Composer } from "yaml";
+import detectIndent from "detect-indent";
 
 enum YAMLValueType {
     OBJECT = "object",
@@ -152,6 +153,7 @@ function shapeshiftDocument(document: unknown, newModel: unknown, doc: yaml.Docu
  */
 export type YAMLContext = {
     document: yaml.Document.Parsed;
+    indent: number;
 };
 
 /**
@@ -177,7 +179,9 @@ export function parse(yamlContent: string): [object, YAMLContext] {
         );
     }
 
-    return [yamlObject, { document }];
+    const indent = detectIndent(yamlContent).amount;
+
+    return [yamlObject, { document, indent }];
 }
 
 /**
@@ -203,5 +207,5 @@ export function stringify(
     shapeshiftDocument(document.toJSON(), updatedYaml, document);
     objectToPaths(updatedYaml).forEach(([path, value]) => document.setIn(path, value));
 
-    return document.toString(options);
+    return document.toString({ indent: context.indent, ...options });
 }
