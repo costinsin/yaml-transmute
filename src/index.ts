@@ -210,6 +210,12 @@ export function stringify(
     return document.toString({ indent: context.indent, ...options });
 }
 
+/**
+ * Merges an array of YAML contexts into a single YAML context.
+ *
+ * @param contexts - An array of YAML contexts to merge.
+ * @returns The merged YAML context, or `undefined` if the input array is empty.
+ */
 export function mergeContexts(contexts: Array<YAMLContext>): YAMLContext | undefined {
     if (contexts.length === 0) {
         return undefined;
