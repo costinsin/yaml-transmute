@@ -179,7 +179,7 @@ export function parse(yamlContent: string): [unknown, YAMLContext] {
         );
     }
 
-    const indent = detectIndent(yamlContent).amount;
+    const indent = detectIndent(yamlContent).amount || 4;
 
     return [yamlObject, { document, indent }];
 }
@@ -208,4 +208,39 @@ export function stringify(
     objectToPaths(updatedYaml).forEach(([path, value]) => document.setIn(path, value));
 
     return document.toString({ indent: context.indent, ...options });
+}
+
+export function mergeContexts(contexts: Array<YAMLContext>): YAMLContext | undefined {
+    if (contexts.length === 0) {
+        return undefined;
+    }
+
+    function mergeContextsRecursive(to: yaml.ParsedNode, from: yaml.ParsedNode) {
+        if (yaml.isMap(to) && yaml.isMap(from)) {
+            for (const fromPair of from.items) {
+                const toPair = to.items.find(
+                    (toPair) => toPair.key.toJSON() === fromPair.key.toJSON()
+                );
+
+                if (!toPair) {
+                    to.items.push(fromPair);
+                } else {
+                    mergeContextsRecursive(toPair.value, fromPair.value);
+                }
+            }
+        } else if (yaml.isSeq(to) && yaml.isSeq(from)) {
+            to.items.push(...from.items.slice(to.items.length));
+        }
+    }
+
+    const document = contexts[0].document.clone() as yaml.Document.Parsed;
+    const indent = contexts[0].indent;
+
+    for (const ctx of contexts.slice(1)) {
+        const from = ctx.document;
+
+        mergeContextsRecursive(document.contents, from.contents);
+    }
+
+    return { document, indent };
 }
