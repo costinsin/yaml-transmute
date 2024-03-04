@@ -65,12 +65,13 @@ function isArray(obj: unknown): obj is Array<unknown> {
  * @param obj - The object to check.
  * @returns True if the object is a primitive value, false otherwise.
  */
-function isPrimitive(obj: unknown): obj is string | number | boolean | null {
+function isPrimitive(obj: unknown): obj is string | number | boolean | null | undefined {
     return (
         typeof obj === "string" ||
         typeof obj === "number" ||
         typeof obj === "boolean" ||
-        obj === null
+        obj === null ||
+        obj === undefined
     );
 }
 
